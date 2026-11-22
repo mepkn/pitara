@@ -1,0 +1,21 @@
+// Enforced on the server (backend) and mirrored by the apps' forms.
+export const LIMITS = {
+  urlMax: 2048,
+  titleMax: 500,
+  descriptionMax: 2000,
+  noteMax: 20_000,
+  tagsPerBookmark: 20,
+  tagNameMax: 50,
+  collectionNameMax: 100,
+  collectionsPerUser: 100,
+  tagsPerUser: 1000,
+  bookmarksPerUser: 100_000,
+  importFileBytes: 10 * 1024 * 1024,
+  importLinks: 20_000,
+  apiTokensPerUser: 10,
+  apiRequestsPerMinute: 60,
+  apiSearchMax: 50,
+  trashDays: 30,
+  bulkIds: 200,
+  collectionDepth: 2,
+} as const;

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pitara">
+  <rect width="64" height="64" rx="14" fill="#D9822B"/>
+  <!-- lid -->
+  <path d="M14 26c0-8 8-13 18-13s18 5 18 13z" fill="#FFF4E3"/>
+  <circle cx="32" cy="12" r="3.5" fill="#FFF4E3"/>
+  <!-- rim -->
+  <rect x="11" y="26" width="42" height="5" rx="2.5" fill="#7A3E0E"/>
+  <!-- body -->
+  <path d="M15 31h34l-3.5 20a4 4 0 0 1-4 3.3h-19a4 4 0 0 1-4-3.3z" fill="#FFF4E3"/>
+  <!-- weave -->
+  <path d="M17 38h30M18.5 46h27M26 31v23M38 31v23" stroke="#D9822B" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+</svg>
