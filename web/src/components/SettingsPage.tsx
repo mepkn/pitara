@@ -345,17 +345,20 @@ function ExportSection() {
   );
 }
 
+const RELEASE_URL = "https://github.com/mepkn/pitara/releases/latest/download";
+
 function GetSection() {
   return (
     <Section title={s.get} hint={s.getHint}>
       <div className="flex flex-wrap gap-2">
-        <Button variant="outline" disabled>
-          {s.extension} · {s.comingSoon}
+        <Button variant="outline" render={<a href={`${RELEASE_URL}/pitara-extension.zip`} />}>
+          <DownloadIcon /> {s.extension}
         </Button>
-        <Button variant="outline" disabled>
-          {s.android} · {s.comingSoon}
+        <Button variant="outline" render={<a href={`${RELEASE_URL}/pitara.apk`} />}>
+          <DownloadIcon /> {s.android}
         </Button>
       </div>
+      <p className="text-xs text-muted-foreground">{s.extensionHowTo}</p>
     </Section>
   );
 }

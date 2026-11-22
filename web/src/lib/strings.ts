@@ -228,7 +228,7 @@ export const strings = {
     getHint: "Save from your browser or phone.",
     extension: "Chrome extension",
     android: "Android app",
-    comingSoon: "Coming soon",
+    extensionHowTo: "The extension is a zip: unzip it, open chrome://extensions, turn on Developer mode and choose Load unpacked.",
   },
 
   shortcuts: {
