@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pitara palette (see the README "Look and feel"): saffron on warm neutrals.
+   --brand is the primary deep enough to read as text on the light background. */
+@layer base {
+  :root {
+    --background: 36 56% 96%;
+    --foreground: 32 28% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 32 28% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 32 28% 13%;
+    --primary: 30 70% 51%;
+    --primary-foreground: 35 100% 97%;
+    --brand: 29 75% 41%;
+    --secondary: 36 42% 91%;
+    --secondary-foreground: 32 28% 13%;
+    --muted: 36 42% 91%;
+    --muted-foreground: 34 15% 42%;
+    --accent: 35 68% 89%;
+    --accent-foreground: 29 70% 21%;
+    --destructive: 17 88% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 35% 85%;
+    --input: 36 33% 80%;
+    --ring: 31 72% 63%;
+    --radius: 0.625rem;
+  }
+
+  .dark:root {
+    --background: 30 17% 9%;
+    --foreground: 36 42% 91%;
+    --card: 33 17% 12%;
+    --card-foreground: 36 42% 91%;
+    --popover: 35 18% 13%;
+    --popover-foreground: 36 42% 91%;
+    --primary: 31 79% 58%;
+    --primary-foreground: 32 68% 10%;
+    --brand: 31 79% 58%;
+    --secondary: 32 19% 15%;
+    --secondary-foreground: 36 42% 91%;
+    --muted: 32 19% 15%;
+    --muted-foreground: 35 16% 59%;
+    --accent: 33 36% 17%;
+    --accent-foreground: 35 77% 85%;
+    --destructive: 25 95% 53%;
+    --destructive-foreground: 30 17% 9%;
+    --border: 30 18% 19%;
+    --input: 31 20% 23%;
+    --ring: 31 54% 47%;
+  }
+}
