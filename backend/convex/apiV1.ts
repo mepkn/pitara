@@ -30,6 +30,7 @@ const apiBookmark = v.object({
   faviconUrl: v.union(v.string(), v.null()),
   imageUrl: v.union(v.string(), v.null()),
   metaStatus,
+  linkStatus: v.union(v.literal("ok"), v.literal("broken"), v.null()),
   createdAt: v.number(),
   updatedAt: v.number(),
 });
@@ -58,6 +59,7 @@ async function toApi(ctx: QueryCtx, docs: Doc<"bookmarks">[], withNote: boolean)
     faviconUrl: b.faviconUrl ?? null,
     imageUrl: b.imageUrl ?? null,
     metaStatus: b.metaStatus,
+    linkStatus: b.linkStatus ?? null,
     createdAt: b.createdAt,
     updatedAt: b.updatedAt,
   }));

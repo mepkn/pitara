@@ -1,8 +1,8 @@
 import { useSyncExternalStore } from "react";
 
-/** A tiny pushState router. Routes: /all /unsorted /c/:id /tag/:id /favorites /unread /trash /settings. Search is `?q=`. */
+/** A tiny pushState router. Routes: /all /unsorted /c/:id /tag/:id /favorites /unread /broken /trash /settings. Search is `?q=`. */
 export type Route =
-  | { kind: "all" | "unsorted" | "favorites" | "unread" | "trash" | "settings" }
+  | { kind: "all" | "unsorted" | "favorites" | "unread" | "broken" | "trash" | "settings" }
   | { kind: "collection"; id: string }
   | { kind: "tag"; id: string };
 
@@ -11,7 +11,7 @@ export interface Location {
   q: string;
 }
 
-const SIMPLE = ["all", "unsorted", "favorites", "unread", "trash", "settings"] as const;
+const SIMPLE = ["all", "unsorted", "favorites", "unread", "broken", "trash", "settings"] as const;
 
 export function parseLocation(pathname: string, search: string): Location {
   const q = new URLSearchParams(search).get("q") ?? "";

@@ -5,7 +5,7 @@ import type { Id } from "@convex/_generated/dataModel";
 import type { Route } from "@/lib/router";
 import type { Sort } from "@/lib/prefs";
 
-type View = "all" | "unsorted" | "collection" | "favorites" | "unread" | "trash";
+type View = "all" | "unsorted" | "collection" | "favorites" | "unread" | "broken" | "trash";
 
 /** The backend view for a route (a tag route lists by tag id and ignores the view). */
 export function routeView(route: Route): View {

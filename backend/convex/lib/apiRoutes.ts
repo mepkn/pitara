@@ -5,6 +5,7 @@ import type { Id } from "../_generated/dataModel";
 import { httpAction, type ActionCtx } from "../_generated/server";
 import { parseCreateBody, parseLimit, parseUpdateBody } from "./apiBody";
 import { env } from "./env";
+import { findBookmarks } from "./findBookmarks";
 import { bearerToken, hashToken } from "./tokens";
 
 // The token-protected HTTP API under /api/v1 (SPEC.md → HTTP API). Every call
@@ -13,7 +14,6 @@ import { bearerToken, hashToken } from "./tokens";
 // per token (apiTokens.authenticate). The user always comes from the token.
 
 const MAX_BODY_CHARS = 100_000; // a note is at most 20,000
-const MAX_PAGES = 5; // pages tried to fill a search result
 
 // ---- responses -------------------------------------------------------------
 
@@ -135,18 +135,8 @@ export function addApiRoutes(http: HttpRouter) {
     const limit = parseLimit(url.searchParams.get("limit"));
     if (limit === null) throw new ConvexError("badRequest");
     const q = url.searchParams.get("q") ?? "";
-    const found = [];
-    let cursor: string | null = null;
-    for (let i = 0; i < MAX_PAGES && found.length < limit; i++) {
-      const page: Awaited<ReturnType<typeof ctx.runQuery<typeof internal.apiV1.find>>> = await ctx.runQuery(
-        internal.apiV1.find,
-        { userId, q, paginationOpts: { numItems: limit, cursor } },
-      );
-      found.push(...page.page);
-      if (page.isDone) break;
-      cursor = page.continueCursor;
-    }
-    return respond(req, 200, { bookmarks: found.slice(0, limit) });
+    const found = await findBookmarks(ctx, userId, q, limit);
+    return respond(req, 200, { bookmarks: found });
   });
 
   http.route({

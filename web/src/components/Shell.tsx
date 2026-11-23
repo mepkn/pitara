@@ -150,7 +150,7 @@ export function Shell() {
     }
   }
 
-  const sortDisabled = route.kind === "trash" || route.kind === "tag" || q.trim() !== "";
+  const sortDisabled = route.kind === "trash" || route.kind === "broken" || route.kind === "tag" || q.trim() !== "";
   const sidebar = <Sidebar route={route} onNavigate={() => setMenuOpen(false)} />;
   const defaultCollectionId = route.kind === "collection" ? route.id : null;
   const onIdsChange = useCallback((next: string[]) => setIds(next), []);

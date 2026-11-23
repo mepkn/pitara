@@ -29,6 +29,10 @@ export default defineSchema({
     faviconUrl: v.optional(v.string()),
     imageUrl: v.optional(v.string()), // og:image, stored as a URL, not downloaded
     metaStatus: v.union(v.literal("pending"), v.literal("done"), v.literal("failed")),
+    // Link checker (linkCheck.ts): "broken" = the page is gone (404/410, or the
+    // host no longer resolves) on two checks a day apart. Unset = not checked yet.
+    linkStatus: v.optional(v.union(v.literal("ok"), v.literal("broken"))),
+    linkCheckedAt: v.optional(v.number()),
     searchText: v.string(), // title, description, note, url, tag names; keep in sync
     deletedAt: v.optional(v.number()), // set = in trash
     createdAt: v.number(),
@@ -52,6 +56,9 @@ export default defineSchema({
     .index("by_deleted", ["deletedAt"])
     // The hourly cron finds bookmarks whose metadata fetch never finished.
     .index("by_meta_status", ["metaStatus", "deletedAt", "updatedAt"])
+    // The daily cron finds bookmarks not checked for a week; the Broken view lists the broken ones.
+    .index("by_link_checked", ["deletedAt", "linkCheckedAt"])
+    .index("by_user_link", ["userId", "linkStatus", "deletedAt", "createdAt"])
     .searchIndex("search_text", {
       searchField: "searchText",
       filterFields: ["userId", "deletedAt", "collectionId"],

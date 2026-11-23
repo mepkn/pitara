@@ -3,6 +3,8 @@
 // timestamps are milliseconds since the epoch.
 
 export type MetaStatus = "pending" | "done" | "failed";
+/** Result of the weekly link check; null = not checked yet. */
+export type LinkStatus = "ok" | "broken";
 
 export interface ApiBookmark {
   id: string;
@@ -21,6 +23,7 @@ export interface ApiBookmark {
   faviconUrl: string | null;
   imageUrl: string | null;
   metaStatus: MetaStatus;
+  linkStatus?: LinkStatus | null;
   createdAt: number;
   updatedAt: number;
 }

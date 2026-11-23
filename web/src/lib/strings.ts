@@ -45,6 +45,7 @@ export const strings = {
     unsorted: "Unsorted",
     favorites: "Favorites",
     unread: "To read",
+    broken: "Broken links",
     trash: "Trash",
     collections: "Collections",
     tags: "Tags",
@@ -88,6 +89,7 @@ export const strings = {
       collection: "This collection is empty. Drag bookmarks here or save a new one.",
       favorites: "Star a bookmark to see it here.",
       unread: "Nothing marked to read.",
+      broken: "No broken links. Saved pages are checked about once a week.",
       trash: "The trash is empty.",
       tag: "No bookmarks with this tag.",
       search: "No bookmarks match your search.",
@@ -118,6 +120,10 @@ export const strings = {
     select: "Select bookmark",
     copyLink: "Copy link",
     linkCopied: "Link copied",
+    broken: "Broken",
+    brokenHint: "This page didn't answer on two checks a day apart (not found, or the site is gone).",
+    recheck: "Check again",
+    rechecking: "Checking the link…",
   },
 
   add: {
@@ -233,17 +239,22 @@ export const strings = {
 
   shortcuts: {
     title: "Keyboard shortcuts",
+    anywhere: "Anywhere",
+    onBookmark: "On the highlighted bookmark",
     search: "Search",
     add: "Add a bookmark",
-    next: "Next bookmark",
-    prev: "Previous bookmark",
-    open: "Open bookmark",
-    edit: "Edit bookmark",
-    star: "Favorite or unfavorite",
-    trash: "Move to trash",
+    addAlt: "Add a bookmark, even while typing",
+    clear: "Clear the selection",
+    next: "Highlight the next bookmark",
+    prev: "Highlight the previous bookmark",
+    open: "Open it in a new tab",
+    edit: "Edit it",
+    star: "Favorite or unfavorite it",
+    trash: "Move it to the trash",
     help: "This help",
-    paste: "Paste a link anywhere to add it",
+    paste: "Paste a link anywhere to add it. Shift-click a checkbox to select a range.",
   },
+
 
   // Server error codes (plain-string ConvexErrors).
   errors: {

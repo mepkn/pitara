@@ -8,6 +8,7 @@ import {
   FolderIcon,
   InboxIcon,
   LibraryIcon,
+  UnlinkIcon,
   MoreHorizontalIcon,
   PlusIcon,
   SettingsIcon,
@@ -71,6 +72,7 @@ export function Sidebar({ route, onNavigate }: Props) {
           <NavItem icon={<InboxIcon />} label={strings.nav.unsorted} active={sameRoute(route, { kind: "unsorted" })} onClick={() => go({ kind: "unsorted" })} dropId={UNSORTED_DROP} />
           <NavItem icon={<StarIcon />} label={strings.nav.favorites} active={sameRoute(route, { kind: "favorites" })} onClick={() => go({ kind: "favorites" })} />
           <NavItem icon={<BookmarkIcon />} label={strings.nav.unread} active={sameRoute(route, { kind: "unread" })} onClick={() => go({ kind: "unread" })} />
+          <NavItem icon={<UnlinkIcon />} label={strings.nav.broken} active={sameRoute(route, { kind: "broken" })} onClick={() => go({ kind: "broken" })} />
           <NavItem icon={<Trash2Icon />} label={strings.nav.trash} active={sameRoute(route, { kind: "trash" })} onClick={() => go({ kind: "trash" })} />
         </div>
 

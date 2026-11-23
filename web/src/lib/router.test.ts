@@ -10,7 +10,7 @@ beforeAll(async () => {
 
 describe("parseLocation", () => {
   it("parses every route", () => {
-    for (const kind of ["all", "unsorted", "favorites", "unread", "trash", "settings"] as const) {
+    for (const kind of ["all", "unsorted", "favorites", "unread", "broken", "trash", "settings"] as const) {
       expect(mod.parseLocation(`/${kind}`, "").route).toEqual({ kind });
     }
     expect(mod.parseLocation("/c/abc123", "").route).toEqual({ kind: "collection", id: "abc123" });

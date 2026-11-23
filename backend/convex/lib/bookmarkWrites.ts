@@ -199,7 +199,9 @@ export async function applyChanges(
     ? buildSearchText(after, await tagNames(ctx, after.tagIds))
     : before.searchText;
 
-  await ctx.db.patch("bookmarks", before._id, { ...changes, searchText, updatedAt: after.updatedAt });
+  // A new URL has not been checked yet (undefined clears the field).
+  const linkReset = changes.url !== undefined && changes.url !== before.url ? { linkStatus: undefined, linkCheckedAt: undefined } : {};
+  await ctx.db.patch("bookmarks", before._id, { ...changes, ...linkReset, searchText, updatedAt: after.updatedAt });
   return { ...after, searchText };
 }
 

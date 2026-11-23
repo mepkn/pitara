@@ -38,6 +38,7 @@ const view = v.union(
   v.literal("collection"),
   v.literal("favorites"),
   v.literal("unread"),
+  v.literal("broken"),
   v.literal("trash"),
 );
 const sort = v.union(v.literal("newest"), v.literal("oldest"), v.literal("title"), v.literal("domain"));
@@ -58,6 +59,7 @@ const shared = {
   faviconUrl: v.optional(v.string()),
   imageUrl: v.optional(v.string()),
   metaStatus: v.union(v.literal("pending"), v.literal("done"), v.literal("failed")),
+  linkStatus: v.optional(v.union(v.literal("ok"), v.literal("broken"))),
   deletedAt: v.optional(v.number()),
   createdAt: v.number(),
   updatedAt: v.number(),
@@ -82,6 +84,7 @@ function summarize(b: Doc<"bookmarks">) {
     faviconUrl: b.faviconUrl,
     imageUrl: b.imageUrl,
     metaStatus: b.metaStatus,
+    linkStatus: b.linkStatus,
     deletedAt: b.deletedAt,
     createdAt: b.createdAt,
     updatedAt: b.updatedAt,
@@ -149,6 +152,11 @@ function scopedQuery(
       return t
         .withIndex("by_user_favorite", (q) => q.eq("userId", userId).eq("favorite", true).eq("deletedAt", undefined))
         .order(order);
+    case "broken":
+      // Newest or oldest only: a title / domain sort would need two more indexes for a short list.
+      return t
+        .withIndex("by_user_link", (q) => q.eq("userId", userId).eq("linkStatus", "broken").eq("deletedAt", undefined))
+        .order(by === "oldest" ? "asc" : "desc");
     case "unread":
       if (by === "title")
         return t
@@ -283,6 +291,7 @@ export async function searchBookmarks(
     (collection === undefined || (b.collectionId ?? null) === collection) &&
     (scope !== "favorites" || b.favorite) &&
     (scope !== "unread" || b.unread) &&
+    (scope !== "broken" || b.linkStatus === "broken") &&
     tagIds.every((id) => b.tagIds.includes(id));
 
   if (parsed.text === "") {
@@ -291,7 +300,7 @@ export async function searchBookmarks(
       scope === "trash" ? "trash"
       : collection === null ? "unsorted"
       : collection !== undefined ? "collection"
-      : scope === "favorites" || scope === "unread" ? scope
+      : scope === "favorites" || scope === "unread" || scope === "broken" ? scope
       : "all";
     const result = await scopedQuery(ctx, userId, {
       view: listView,

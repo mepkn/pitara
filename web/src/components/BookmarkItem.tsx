@@ -1,7 +1,7 @@
 import { memo, useState } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { useMutation } from "convex/react";
-import { BookmarkIcon, CheckIcon, CopyIcon, GlobeIcon, PencilIcon, RotateCcwIcon, StarIcon, Trash2Icon, XIcon } from "lucide-react";
+import { BookmarkIcon, CheckIcon, CopyIcon, GlobeIcon, PencilIcon, RefreshCwIcon, RotateCcwIcon, StarIcon, Trash2Icon, XIcon } from "lucide-react";
 import { toast } from "sonner";
 import { api } from "@convex/_generated/api";
 import type { Doc, Id } from "@convex/_generated/dataModel";
@@ -70,10 +70,12 @@ export const BookmarkItem = memo(function BookmarkItem(props: Props) {
   const trash = useMutation(api.bookmarks.trash);
   const restore = useMutation(api.bookmarks.restore);
   const deleteForever = useMutation(api.bookmarks.deleteForever);
+  const recheck = useMutation(api.linkCheck.recheck);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: `bm:${b._id}`, disabled: inTrash });
 
   const id = b._id as Id<"bookmarks">;
+  const broken = b.linkStatus === "broken";
   const pending = b.metaStatus === "pending" && b.title === "";
   const title = b.title || (pending ? "" : b.domain || b.url);
   const attempt = (action: () => Promise<unknown>, success?: string) =>
@@ -108,6 +110,11 @@ export const BookmarkItem = memo(function BookmarkItem(props: Props) {
           <Button variant="ghost" size="icon-sm" aria-pressed={b.unread} aria-label={b.unread ? strings.list.markRead : strings.list.markUnread} title={b.unread ? strings.list.markRead : strings.list.markUnread} onClick={() => void attempt(() => toggleUnread({ id }))}>
             <BookmarkIcon className={cn(b.unread && "fill-primary text-primary")} />
           </Button>
+          {broken && (
+            <Button variant="ghost" size="icon-sm" aria-label={strings.list.recheck} title={strings.list.recheck} onClick={() => void attempt(() => recheck({ id }), strings.list.rechecking)}>
+              <RefreshCwIcon />
+            </Button>
+          )}
           <Button variant="ghost" size="icon-sm" aria-label={strings.list.copyLink} title={strings.list.copyLink} onClick={() => void navigator.clipboard.writeText(b.url).then(() => toast(strings.list.linkCopied))}>
             <CopyIcon />
           </Button>
@@ -166,6 +173,11 @@ export const BookmarkItem = memo(function BookmarkItem(props: Props) {
 
   const flags = (
     <>
+      {broken && (
+        <Badge variant="destructive" className="shrink-0 font-normal" title={strings.list.brokenHint}>
+          {strings.list.broken}
+        </Badge>
+      )}
       {b.favorite && <StarIcon className="size-3.5 shrink-0 fill-primary text-primary" aria-label="Favorite" />}
       {b.unread && <BookmarkIcon className="size-3.5 shrink-0 fill-primary text-primary" aria-label="To read" />}
     </>
